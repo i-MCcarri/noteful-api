@@ -1,0 +1,4 @@
+ALTER TABLE noteful_notes
+ADD COLUMN
+folderid INTEGER REFERENCES noteful_folders(id)
+ON DELETE CASCADE NULL;
