@@ -1,4 +1,4 @@
-TRUNCATE noteful_notes;
+TRUNCATE noteful_notes RESTART IDENTITY CASCADE;
 
 INSERT INTO noteful_notes (note_name, content, modified, folderId)
 VALUES

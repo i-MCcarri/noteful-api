@@ -9,10 +9,9 @@ const errorHandler = require('./error-handler')
 const notesRouter = require('./notes/notes-router')
 const foldersRouter = require('./folders/folders-router')
 
-const morganOption = NODE_ENV === 'production' ? 'tiny' : 'dev';
-
 const app = express();
-app.use(morgan(morganOption));
+const morganSetting = process.env.NODE_ENV === 'production' ? 'tiny' : 'common'
+app.use(morgan(morganSetting))
 app.use(helmet());
 app.use(cors());
 // app.use(validateBearerToken)
@@ -20,9 +19,20 @@ app.use(cors());
 app.use('/notes', notesRouter)
 app.use('/folders', foldersRouter)
 
+app.use(errorHandler);
+app.use((error, req, res, next) => {
+  let response
+  if (process.env.NODE_ENV === 'production') {
+    response = { error: { message: 'server error' }}
+  } else {
+    response = { error }
+  }
+  res.status(500).json(response)
+})
+
+
 app.get('/', (req, res) => {
   res.send('Hello, beautiful!');
 });
 
-app.use(errorHandler);
 module.exports = app;

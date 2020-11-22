@@ -18,7 +18,7 @@
   "author": "devon-reihl",
   "license": "ISC",
   "engines": {
-    "node": "12.18.3"
+    "node": "12.16.2"
   },
   "dependencies": {
     "cors": "^2.8.5",
